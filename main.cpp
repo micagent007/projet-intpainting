@@ -6,7 +6,19 @@ using namespace std;
 #include <vector>
 #include "cord.h"
 
+void Espace_blanc(int W, int H,vector <cord> ListePoint ,byte* r, byte* g, byte* b){
+    for (int x=0;x<W;x++)
+        for (int y=0;y<H;y++){
+            cord P={x,y};
+            if (in(ListePoint,P)){
+                r[x+y*W]=255,
+                        g[x+y*W]=255,
+                        b[x+y*W]=255;
 
+            }
+
+        }
+};
 
 int main(){
     int W=512,
@@ -40,11 +52,21 @@ int main(){
     }
 
     click();
-    getMouse(x,y);
-    cord P={x,y};
-    drawCircle(x,y,3,RED);
-    bool test=in(ListePoint,P);
-    cout<< test;
+    Espace_blanc(W,H,ListePoint,r,g,b);
+
+    putColorImage(0,0,r,g,b,W,H);
+    click();
+    for (int k=0;k<ListePoint.size()-1;k++){
+        cord O=ListePoint[k];
+        cord P=ListePoint[k+1];
+        drawLine(P.x,P.y,O.x,O.y,RED);}
+    cord O=ListePoint[ListePoint.size()- 1];
+    cord P=ListePoint[0];
+    drawLine(P.x,P.y,O.x,O.y,RED);
+    click();
+
+
+
 
     delete [] r;
     delete [] g;
