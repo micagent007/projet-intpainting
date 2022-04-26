@@ -47,7 +47,7 @@ bool in(std::vector <cord> ListePoint,cord P){
     cord O=ListePoint[ListePoint.size()-1];
     cord Q=ListePoint[0];
     s+=angle(O-P,Q-P);
-    if ((2*M_PI-s)<1e-5)
+    if ((2*M_PI-s)<1e-10)
         return(true);
 
     return(false);
