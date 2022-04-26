@@ -6,6 +6,8 @@ using namespace std;
 #include <vector>
 #include "cord.h"
 
+
+
 int main(){
     int W=512,
             H=512;
@@ -38,10 +40,15 @@ int main(){
     }
 
     click();
-    putColorImage(0,0,r,g,b,W,H);
-    click();
+    getMouse(x,y);
+    cord P={x,y};
+    drawCircle(x,y,3,RED);
+    bool test=in(ListePoint,P);
+    cout<< test;
+
     delete [] r;
     delete [] g;
     delete [] b;
+    delete [] t;
     return 1;
 }
