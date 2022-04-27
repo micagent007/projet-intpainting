@@ -83,11 +83,9 @@ int main(){
     byte* r;
     byte* g;
     byte* b;
-    byte* t;
     loadColorImage(srcPath("Capture1.PNG"),r,g,b,W,H);
     openWindow(W,H);
     putColorImage(0,0,r,g,b,W,H);
-    loadGreyImage(srcPath("Capture1.PNG"),t,W,H);
     int x=0,y=0;
     std::vector <cord> ListePoint;
     getMouse(x,y);
@@ -126,6 +124,5 @@ int main(){
     delete [] r;
     delete [] g;
     delete [] b;
-    delete [] t;
     return 1;
 }
