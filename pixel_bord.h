@@ -1,11 +1,11 @@
 #ifndef PIXEL_BORD_H
 #define PIXEL_BORD_H
-
+#include "cord.h"
 class pixel_bord{
 public:
     double priorite;
     int emplacement_fp;
-    int i,j;
+    cord P;
     int emplacement_liste;
 
     pixel_bord(int I,int J);
