@@ -52,3 +52,40 @@ bool in(std::vector <cord> ListePoint,cord P){
 
     return(false);
 }
+bool autour_blanc(cord P,int W, int H,byte* r, byte* g, byte* b){
+    int s=0;
+    for (int k=-1;k<2;k++)
+        for (int j=-1;j<2;j++){
+            if(j!=0 or k!=0)
+                if (r[P.x+k+(P.y+j)*W]==255 and g[P.x+k+(P.y+j)*W]==255 and b[P.x+k+(P.y+j)*W]==255)
+                    s+=1;
+        }
+    if (s==8)
+        return(true);
+    return false;
+}
+void Espace_blanc_compar_blanc(int W, int H,vector <cord> ListePoint ,byte* r, byte* g, byte* b,bool* TablIn){
+    for (int x=0;x<W;x++)
+        for (int y=0;y<H;y++){
+            cord P={x,y};
+            if (in(ListePoint,P) ){
+                r[x+y*W]=255,
+                        g[x+y*W]=255,
+                        b[x+y*W]=255,
+                        TablIn[x+y*W]=true;
+
+            }
+            else{TablIn[x+y*W]=false;}
+        }
+    for (int x=0;x<W;x++)
+        for (int y=0;y<H;y++){
+            cord P={x,y};
+            if (autour_blanc(P,W,H,r,g,b)){
+                r[x+y*W]=255,
+                        g[x+y*W]=255,
+                        b[x+y*W]=255,
+                        TablIn[x+y*W]=true;
+
+            }
+        }
+}
