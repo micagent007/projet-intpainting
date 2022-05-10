@@ -10,6 +10,8 @@ using namespace std;
 #include "cord.h"
 
 void convertGrey(int W,int H,byte* r, byte* g,byte* b, byte* t );
+void drawclicks(vector <cord>& ListePoint);
+void drawoutline(vector <cord>& ListePoint);
 
 
 #endif // ARTHUR_H
