@@ -5,10 +5,42 @@ using namespace Imagine;
 using namespace std;
 #include <vector>
 #include "cord.h"
-#include "simon.h"
+
+void points_bord(int W, int H,byte* r, byte* g, byte* b,std::vector <cord> ListeSommets, std::vector <cord> ListePointsBord){
+   //On ouvre une nouvelle fenetre
+    Window bordure;
+    setActiveWindow(bordure);
+    openWindow(W,H);
+
+    //On trace dans la nouvelle fenetre blanche le contour de la fugure en rouge
+    for (int k=0;k<ListeSommets.size()-1;k++){
+        cord O=ListeSommets[k];
+        cord P=ListeSommets[k+1];
+        drawLine(P.x,P.y,O.x,O.y,RED);}
+    cord O=ListeSommets[ListeSommets.size()- 1];
+    cord P=ListeSommets[0];
+    drawLine(P.x,P.y,O.x,O.y,RED);
+
+    //On cherche dans l'image tout les points rouge et on les ajoutes à la liste des points du bord
+    for(int i =0; i<W;i++){
+        for(int j =0; j<H;j++){
+            cord P={i,j};
+            if( r[i+j*W]==255 and g[i+j*W]==0 and b[i+j*W]==0 ){
+                ListePointsBord.push_back(P);
+            }
+        }
+    }
+
+    //On referme la fenetre ouverte pour l'opération
+    closeWindow(bordure);
 
 
-void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <pixel_bord> & ListePointsBord){
+
+
+}
+
+
+void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <cord> & ListePointsBord){
     int dx = x2 - x1;
     int dy;
 
@@ -25,7 +57,7 @@ void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <pixel_bord> &
                         dy = dy * 2;
                         // e est positif
                         for(;;){
-                            pixel_bord P(x1,y1);
+                            cord P={x1,y1};
                             ListePointsBord.push_back(P);
 
                             ++x1;
@@ -45,7 +77,7 @@ void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <pixel_bord> &
                         dx = dx * 2 ;
                         // e est positif
                         for(;;){  // déplacements verticaux
-                            pixel_bord P(x1,y1);
+                            cord P={x1,y1};
                             ListePointsBord.push_back(P);
                             ++y1;
                             if(y1 == y2){
@@ -68,7 +100,7 @@ void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <pixel_bord> &
                         dy = dy * 2 ;
                         // e est positif
                         for(;;){  // déplacements horizontaux
-                            pixel_bord P(x1,y1);
+                            cord P={x1,y1};
                             ListePointsBord.push_back(P);
                             ++x1;
                             if(x1 == x2){
@@ -87,7 +119,7 @@ void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <pixel_bord> &
                         dy = e * 2 ;
                         dx = dx * 2 ;  // e est négatif
                         for(;;){  // déplacements verticaux
-                            pixel_bord P(x1,y1);
+                            cord P={x1,y1};
                             ListePointsBord.push_back(P);
                             --y1;
                             if(y1 == y2){
@@ -104,7 +136,7 @@ void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <pixel_bord> &
             }else{  // dy = 0 (et dx > 0)
                 // vecteur horizontal vers la droite
                 do{
-                    pixel_bord P(x1,y1);
+                    cord P={x1,y1};
                     ListePointsBord.push_back(P);
                     ++x1;
                 }while(x1 != x2);
@@ -121,7 +153,7 @@ void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <pixel_bord> &
                         dy = dy * 2;
                         // e est négatif
                         for(;;){ // déplacements horizontaux
-                            pixel_bord P(x1,y1);
+                            cord P={x1,y1};
                             ListePointsBord.push_back(P);
                             --x1;
                             if(x1 == x2){
@@ -140,7 +172,7 @@ void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <pixel_bord> &
                         dx = dx * 2 ;
                         // e est positif
                         for(;;){  // déplacements verticaux
-                            pixel_bord P(x1,y1);
+                            cord P={x1,y1};
                             ListePointsBord.push_back(P);
                             ++y1;
                             if(y1 == y2){
@@ -162,7 +194,7 @@ void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <pixel_bord> &
                         dy = dy * 2;
                         // e est négatif
                         for(;;){  // déplacements horizontaux
-                            pixel_bord P(x1,y1);
+                            cord P={x1,y1};
                             ListePointsBord.push_back(P);
                             --x1;
                             if(x1 == x2){
@@ -180,7 +212,7 @@ void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <pixel_bord> &
                         dx = dx * 2;
                         // e est négatif
                         for(;;){ // déplacements verticaux
-                            pixel_bord P(x1,y1);
+                            cord P={x1,y1};
                             ListePointsBord.push_back(P);
                             --y1;
                             if(y1==y2){
@@ -197,7 +229,7 @@ void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <pixel_bord> &
             }else{  // dy = 0 (et dx < 0)
                 // vecteur horizontal vers la gauche
                 do{
-                    pixel_bord P(x1,y1);
+                    cord P={x1,y1};
                     ListePointsBord.push_back(P);
                     --x1;
                 }while(x1 != x2);
@@ -210,13 +242,13 @@ void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <pixel_bord> &
             if(dy > 0){
                 // vecteur vertical croissant
                 do{
-                    pixel_bord P(x1,y1);
+                    cord P={x1,y1};
                     ListePointsBord.push_back(P);
                     ++y1;
                 }while(y1 != y2);
             }else{ // dy < 0 (et dx = 0)
                 do{
-                    pixel_bord P(x1,y1);
+                    cord P={x1,y1};
                     ListePointsBord.push_back(P);
                     --y1;
                 }while(y1 != y2);
@@ -224,20 +256,18 @@ void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <pixel_bord> &
         }
     }
     //On trace le dernier point du segment:
-    pixel_bord P(x1,y1);
+    cord P={x2,y2};
     ListePointsBord.push_back(P);
 }
 
-void pointsbords(std::vector <pixel_bord> & ListePointsBord,std::vector <cord> ListeSommets){
-    for(int i = 0; i<ListeSommets.size()-1;i++){
+void pointsbord(std::vector <cord> & ListePointsBord, std::vector <cord> ListeSommets){
+    for(int i = 0; i<ListeSommets.size()-1; i++){
         ajout_point_bord(ListeSommets[i].x,ListeSommets[i].y,ListeSommets[i+1].x,ListeSommets[i+1].y,ListePointsBord);
     }
-    ajout_point_bord(ListeSommets[0].x,ListeSommets[0].y,ListeSommets[ListeSommets.size()].x,ListeSommets[ListeSommets.size()].y,ListePointsBord);
-
+    ajout_point_bord(ListeSommets[0].x,ListeSommets[0].y,ListeSommets[ListeSommets.size()-1].x,ListeSommets[ListeSommets.size()-1].y,ListePointsBord);
 }
-
-void test_points_bord(std::vector <pixel_bord> ListePointsBord){
-    for(int i = 0;i<ListePointsBord.size();i++){
-        drawPoint(ListePointsBord[i].P.x, ListePointsBord[i].P.y, BLUE );
+void test_points_bord(std::vector <cord> ListePointsBord){
+    for(int i = 0; i<ListePointsBord.size();i++){
+        drawPoint(ListePointsBord[i].x, ListePointsBord[i].y, BLUE);
     }
 }

@@ -27,11 +27,13 @@ int main(){
     std::vector <cord> ListePoint;
     drawclicks(ListePoint);
 
-    /*click();
-    std::vector <pixel_bord> ListeBord;
-    pointsbords(ListeBord,ListePoint);
+    click();
+    std::vector <cord> ListeBord;
+    //ajout_point_bord(ListePoint[0].x,ListePoint[0].y,ListePoint[ListePoint.size()-1].x,ListePoint[ListePoint.size()-1].y,ListeBord);
+
+    pointsbord(ListeBord,ListePoint);
     test_points_bord(ListeBord);
-*/
+
 
     click();
     bool* TableIn=new bool[W*H];
