@@ -21,6 +21,9 @@ double norm2 ( cord a ) {   // Euclide an norm
     double N=sqrt(pow(a.x,2)+pow(a.y,2));
     return N;
 }
+double norminf(cord a){
+    return max(abs(a.x),abs(a.y));
+}
 cord operator*(cord a , int lambda) {  // Mult . scalar
     cord V={lambda*a.x,lambda*a.y};
     return V;

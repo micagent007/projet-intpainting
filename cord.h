@@ -18,6 +18,7 @@ struct cord{
 cord operator+(cord a , cord b ) ; // Sum
 cord operator-(cord a , cord b ) ; // Difference
 double norm2 ( cord a ) ; // Euclide an norm
+double norminf(cord a);
 cord operator*(cord a , int lambda) ; // Mult . scalar
 cord operator*( double lambda , cord a ) ;// Mult . scalar
 double scalar(cord u, cord v);

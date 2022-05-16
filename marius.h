@@ -12,8 +12,10 @@ using namespace std;
 #include "pixel_bord.h"
 #include "priorite.h"
 
+const int carre = 0;
+const int cercle = 1;
 
-std::vector<cord> calc_patch(int type_patch,cord p,Image<double> I)
+std::vector<cord> calc_patch(int type_patch,cord p,int w,int h,int size);
 
 
 void calcul_conf(cord p,std::vector<cord> patch,Image<double> conf);
