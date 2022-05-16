@@ -6,40 +6,6 @@ using namespace std;
 #include <vector>
 #include "cord.h"
 
-void points_bord(int W, int H,byte* r, byte* g, byte* b,std::vector <cord> ListeSommets, std::vector <cord> ListePointsBord){
-   //On ouvre une nouvelle fenetre
-    Window bordure;
-    setActiveWindow(bordure);
-    openWindow(W,H);
-
-    //On trace dans la nouvelle fenetre blanche le contour de la fugure en rouge
-    for (int k=0;k<ListeSommets.size()-1;k++){
-        cord O=ListeSommets[k];
-        cord P=ListeSommets[k+1];
-        drawLine(P.x,P.y,O.x,O.y,RED);}
-    cord O=ListeSommets[ListeSommets.size()- 1];
-    cord P=ListeSommets[0];
-    drawLine(P.x,P.y,O.x,O.y,RED);
-
-    //On cherche dans l'image tout les points rouge et on les ajoutes à la liste des points du bord
-    for(int i =0; i<W;i++){
-        for(int j =0; j<H;j++){
-            cord P={i,j};
-            if( r[i+j*W]==255 and g[i+j*W]==0 and b[i+j*W]==0 ){
-                ListePointsBord.push_back(P);
-            }
-        }
-    }
-
-    //On referme la fenetre ouverte pour l'opération
-    closeWindow(bordure);
-
-
-
-
-}
-
-
 
 void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <cord> & ListePointsBord){
     int dx = x2 - x1;
