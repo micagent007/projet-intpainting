@@ -10,7 +10,7 @@ using namespace std;
 #include "micka.h"
 #include "marius.h"
 #include "pixel_bord.h"
-
+#include <Imagine/Images.h>
 
 
 int main(){
@@ -36,7 +36,7 @@ int main(){
 
 
     click();
-    bool* TableIn=new bool[W*H];
+    Image<bool> TableIn(W,H);
 
     Espace_blanc_compar_blanc(W,H,ListePoint,r,g,b,TableIn);
     putColorImage(0,0,r,g,b,W,H);
