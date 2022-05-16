@@ -8,10 +8,10 @@ using namespace Imagine;
 using namespace std;
 #include <vector>
 #include "cord.h"
-
+#include "pixel_bord.h"
 void points_bord(int W, int H, byte* r, byte* g, byte* b,std::vector <cord> ListeSommets, std::vector <cord> ListePointsBord);
 void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <cord> & ListePointsBord);
-void pointsbord(std::vector <cord> & ListePointsBord, std::vector <cord> ListeSommets);
-void test_points_bord(std::vector <cord> ListePointsBord);
+void pointsbord(std::vector <pixel_bord> & ListeBord, std::vector <cord> ListeSommets);
+void test_points_bord(std::vector <pixel_bord> & ListePointsBord);
 
 #endif // SIMON_H

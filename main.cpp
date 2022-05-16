@@ -28,8 +28,7 @@ int main(){
     drawclicks(ListePoint);
 
     click();
-    std::vector <cord> ListeBord;
-    //ajout_point_bord(ListePoint[0].x,ListePoint[0].y,ListePoint[ListePoint.size()-1].x,ListePoint[ListePoint.size()-1].y,ListeBord);
+    std::vector <pixel_bord> ListeBord;
 
     pointsbord(ListeBord,ListePoint);
     test_points_bord(ListeBord);
