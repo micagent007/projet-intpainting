@@ -6,7 +6,10 @@ using namespace std;
 #include <vector>
 #include "cord.h"
 #include "arthur.h"
-
+#include "simon.h"
+#include "micka.h"
+#include "marius.h"
+#include "pixel_bord.h"
 
 
 
@@ -24,8 +27,13 @@ int main(){
     std::vector <cord> ListePoint;
     drawclicks(ListePoint);
 
-    click();
+    /*click();
+    std::vector <pixel_bord> ListeBord;
+    pointsbords(ListeBord,ListePoint);
+    test_points_bord(ListeBord);
+*/
 
+    click();
     bool* TableIn=new bool[W*H];
 
     Espace_blanc_compar_blanc(W,H,ListePoint,r,g,b,TableIn);
