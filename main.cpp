@@ -11,13 +11,12 @@ using namespace std;
 
 
 int main(){
-    int W=512,
-            H=512;
+    int W=512,H=512;
     byte* r;
     byte* g;
     byte* b;
 
-    loadColorImage(srcPath("Capture1.PNG"),r,g,b,W,H);
+    loadColorImage(srcPath("Capture1.png"),r,g,b,W,H);
     openWindow(W,H);
     putColorImage(0,0,r,g,b,W,H);
 
