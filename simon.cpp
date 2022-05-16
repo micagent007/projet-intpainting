@@ -259,3 +259,15 @@ void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <cord> & Liste
     cord P={x2,y2};
     ListePointsBord.push_back(P);
 }
+
+void pointsbord(std::vector <cord> & ListePointsBord, std::vector <cord> ListeSommets){
+    for(int i = 0; i<ListeSommets.size()-1; i++){
+        ajout_point_bord(ListeSommets[i].x,ListeSommets[i].y,ListeSommets[i+1].x,ListeSommets[i+1].y,ListePointsBord);
+    }
+    ajout_point_bord(ListeSommets[0].x,ListeSommets[0].y,ListeSommets[ListeSommets.size()-1].x,ListeSommets[ListeSommets.size()-1].y,ListePointsBord);
+}
+void test_points_bord(std::vector <cord> ListePointsBord){
+    for(int i = 0; i<ListePointsBord.size();i++){
+        drawPoint(ListePointsBord[i].x, ListePointsBord[i].y, BLUE);
+    }
+}

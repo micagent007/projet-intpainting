@@ -6,7 +6,7 @@ using namespace Imagine;
 #include <ctime>
 #include<iostream>
 using namespace std;
-
+#include <Imagine/Images.h>
 #include "cord.h"
 
 cord operator+(cord a , cord b ) {  // Sum
@@ -20,6 +20,9 @@ cord operator-(cord a , cord b ) { // Difference
 double norm2 ( cord a ) {   // Euclide an norm
     double N=sqrt(pow(a.x,2)+pow(a.y,2));
     return N;
+}
+double norminf(cord a){
+    return max(abs(a.x),abs(a.y));
 }
 cord operator*(cord a , int lambda) {  // Mult . scalar
     cord V={lambda*a.x,lambda*a.y};
@@ -64,7 +67,7 @@ bool autour_blanc(cord P,int W, int H,byte* r, byte* g, byte* b){
         return(true);
     return false;
 }
-void Espace_blanc_compar_blanc(int W, int H,vector <cord> ListePoint ,byte* r, byte* g, byte* b,bool* TablIn){
+void Espace_blanc_compar_blanc(int W, int H,vector <cord> ListePoint ,byte* r, byte* g, byte* b,Image<bool> TablIn){
     for (int x=0;x<W;x++)
         for (int y=0;y<H;y++){
             cord P={x,y};
@@ -72,10 +75,10 @@ void Espace_blanc_compar_blanc(int W, int H,vector <cord> ListePoint ,byte* r, b
                 r[x+y*W]=255,
                         g[x+y*W]=255,
                         b[x+y*W]=255,
-                        TablIn[x+y*W]=true;
+                        TablIn(x,y)=true;
 
             }
-            else{TablIn[x+y*W]=false;}
+            else{TablIn(x,y)=false;}
         }
     for (int x=0;x<W;x++)
         for (int y=0;y<H;y++){
@@ -84,7 +87,7 @@ void Espace_blanc_compar_blanc(int W, int H,vector <cord> ListePoint ,byte* r, b
                 r[x+y*W]=255,
                         g[x+y*W]=255,
                         b[x+y*W]=255,
-                        TablIn[x+y*W]=true;
+                        TablIn(x,y)=true;
 
             }
         }

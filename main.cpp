@@ -6,8 +6,11 @@ using namespace std;
 #include <vector>
 #include "cord.h"
 #include "arthur.h"
-
-
+#include "simon.h"
+#include "micka.h"
+#include "marius.h"
+#include "pixel_bord.h"
+#include <Imagine/Images.h>
 
 
 int main(){
@@ -25,8 +28,15 @@ int main(){
     drawclicks(ListePoint);
 
     click();
+    std::vector <cord> ListeBord;
+    //ajout_point_bord(ListePoint[0].x,ListePoint[0].y,ListePoint[ListePoint.size()-1].x,ListePoint[ListePoint.size()-1].y,ListeBord);
 
-    bool* TableIn=new bool[W*H];
+    pointsbord(ListeBord,ListePoint);
+    test_points_bord(ListeBord);
+
+
+    click();
+    Image<bool> TableIn(W,H);
 
     Espace_blanc_compar_blanc(W,H,ListePoint,r,g,b,TableIn);
     putColorImage(0,0,r,g,b,W,H);
