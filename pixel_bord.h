@@ -4,9 +4,9 @@
 class pixel_bord{
 public:
     double priorite;
-    int emplacement_fp;
+    int *emplacement_fp;
     cord P;
-    int emplacement_liste;
+    int *emplacement_liste;
 
     pixel_bord(int I,int J);
 
@@ -16,6 +16,8 @@ public:
     bool operator>(pixel_bord p) const {
         return (priorite>p.priorite);
     }
+    void operator=(const pixel_bord &p);
+    void delet();
 
 };
 
