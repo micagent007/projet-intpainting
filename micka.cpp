@@ -8,18 +8,23 @@ using namespace std;
 #include "cord.h"
 
 
-void gradient(const Image<float>& I, Image<float>& Vx, Image<float>& Vy) {
-    Vx = Image<float>(I.width(), I.height());
-    Vy = Image<float>(I.width(), I.height());
+Image<FVector<float,2>> gradient(const Image<float>& I,const Image<bool>& in_area) {
+    Image<FVector<float,2>> grad;
+    grad = Image<FVector<float,2>>(I.width(), I.height());
+    FVector<float,2> zero;
+    grad.fill(zero);
     for(int i=0;i<I.width();i++){
         for(int j=0;j<I.height();j++){
-            FVector<float,2> Grad = gradient(I,Coords<2>(i,j));
-            Vx(i,j)=Grad.x();
-            Vy(i,j)=Grad.y();
+            if(in_area(i,j)==false){
+            grad(i,j) = gradient(I,Coords<2>(i,j));
+            }
         }
     }
+    return grad;
 }
 
-void orthogonal(){
+FVector<float,2> orthogonal(const Image<FVector<float,2>>& grad,int i,int j,const Image<bool>& in_area){
+    FVector<float,2> ortho;
 
+    return ortho;
 }
