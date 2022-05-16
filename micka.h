@@ -7,7 +7,8 @@ using namespace Imagine;
 #include <iostream>
 using namespace std;
 #include <vector>
-#include "cord_double.h"
+#include "cord.h"
+#include "pixel_bord.h"
 
 class cord_double{
 
@@ -21,7 +22,7 @@ public:
     cord_double operator*(double lambda) ; // Mult . scalar
     double operator*(cord_double v);
     cord_double rotation(double angle);
-}
+};
 
 cord_double operator*(double lambda,cord_double b);
 std::vector <cord_double> grad(const Image<double>& I,std::vector <pixel_bord> liste_pixel_bord);
