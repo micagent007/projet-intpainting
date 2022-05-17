@@ -69,7 +69,7 @@ void ajout_point_bord(int x1, int y1, int x2, int y2, std::vector <cord> & Liste
                         dy = dy * 2 ;
                         // e est positif
                         for(;;){  // déplacements horizontaux
-                            cout << "ici"<< endl;
+
                             cord P={x1,y1};
                             ListePointsBord.push_back(P);
                             ++x1;
