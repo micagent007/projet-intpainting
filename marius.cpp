@@ -22,10 +22,10 @@ void calcul_conf(cord p,std::vector<cord> patch,Image<double> conf){
             s+=conf(patch[i].x,patch[i].y);
     }
     s/=patch.size();
-    conf(p.x,p.y)=s;
+    conf(p.x,p.y)=s; //diviser par 255 ??
 }
 
-void calc_prio(std::vector<pixel_bord> pix,Image<double> conf,std::vector<double> grad,FilePriorite F,int i){
+void calc_prio(std::vector<pixel_bord> pix,Image<double> conf,std::vector<double> grad,FilePriorite F,int i){//le i ici c'est l'emplacement dans la liste alors pq pas utiliser celui de pixel bord ? ici on multiplie par le grad faut faire gaff c'est la norme
     pix[i].priorite=conf(pix[i].P.x,pix[i].P.y)*grad[i];
     F.push(pix[i]);
 }
