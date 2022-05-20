@@ -25,12 +25,10 @@ void calcul_conf(cord p,std::vector<cord> patch,Image<double> conf){
     conf(p.x,p.y)=s; //diviser par 255 ??
 }
 
-void calc_prio(std::vector<pixel_bord> pix,Image<double> conf,std::vector<double> grad,FilePriorite F,int i){//le i ici c'est l'emplacement dans la liste alors pq pas utiliser celui de pixel bord ? ici on multiplie par le grad faut faire gaff c'est la norme
-    pix[i].priorite=conf(pix[i].P.x,pix[i].P.y)*grad[i];
-    F.push(pix[i]);
-}
 
-FilePriorite init_prio(std::vector<pixel_bord> pix, Image<double> conf, std::vector<double> grad){
+
+
+FilePriorite prio(std::vector<pixel_bord> pix, Image<double> conf, std::vector<double> grad){
     FilePriorite F;
     for(int i=0;i<pix.size();i++){
         pix[i].priorite=conf(pix[i].P.x,pix[i].P.y)*grad[i];
@@ -38,3 +36,22 @@ FilePriorite init_prio(std::vector<pixel_bord> pix, Image<double> conf, std::vec
     }
     return F;
 }
+
+double distance(cord p,cord q,Image<double> conf, byte* r, byte* g,byte* b){
+    int w=conf.width();int h=conf.height();
+    std::vector<cord> patch_p=calc_patch(type_p,p,w,h,siz);
+    double d=0;
+    for(int i=0;i<patch_p.size();i++){
+        int xp=patch_p[i].x;int yp=patch_p[i].y;
+        int xq=xp-p.x+q.x;int yq=yp-p.y+q.y;
+        if(conf(xq,yq)==0||xp>=w||xp<0||yp<0||yp>h)
+            continue;
+        double dp=0;
+        dp+=pow(r[xp+conf.width()*yp]-r[xq+conf.width()*yq],2);
+        dp+=pow(g[xp+conf.width()*yp]-g[xq+conf.width()*yq],2);
+        dp+=pow(b[xp+conf.width()*yp]-b[xq+conf.width()*yq],2);
+        d+=sqrt(dp);
+    }
+    return d;
+}
+

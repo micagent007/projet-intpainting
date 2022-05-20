@@ -45,10 +45,10 @@ int main(){
     for(int i = 0; i<ListeBord.size();i++){
         drawPoint(ListeBord[i].x, ListeBord[i].y, BLUE);}
     std::vector <pixel_bord> ListepixelBord;
-    /*
+
     for(int i = 0; i<ListeBord.size();i++){
         pixel_bord P(ListeBord[i].x, ListeBord[i].y);
-        ListepixelBord.push_back(P);}*/
+        ListepixelBord.push_back(P);}
     test_points_bord(ListepixelBord);
 
 

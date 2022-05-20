@@ -12,7 +12,6 @@ public:
     bool empty(); //
     void push(pixel_bord p); //
     pixel_bord pop(); //
-    pixel_bord extract(int empl_fp);
 };
 
 #endif // PRIORITE_H

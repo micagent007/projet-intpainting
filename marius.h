@@ -15,11 +15,19 @@ using namespace std;
 const int carre = 0;
 const int cercle = 1;
 
+const int type_p=0;
+const int siz=4;
+
 std::vector<cord> calc_patch(int type_patch,cord p,int w,int h,int size);
 
 
 void calcul_conf(cord p,std::vector<cord> patch,Image<double> conf);
 
-void calc_prio(std::vector<pixel_bord> pix,Image<double> conf,std::vector<double> grad,FilePriorite F,int i);
-FilePriorite init_prio(std::vector<pixel_bord> pix, Image<double> conf, std::vector<double> grad);
+FilePriorite prio(std::vector<pixel_bord> pix, Image<double> conf, std::vector<double> grad);
+
+double distance(cord p,cord q,Image<double> conf, byte* r, byte* g,byte* b);
+
+
+
+
 #endif // MARIUS_H
