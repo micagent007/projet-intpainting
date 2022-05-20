@@ -9,7 +9,7 @@ using namespace std;
 #include <vector>
 #include "cord.h"
 
-void convertGrey(int W,int H,byte* r, byte* g,byte* b, byte* t );
+void convertGrey(int W,int H, byte* r, byte* g,byte* b, Image<byte> Image_in_grey );
 void drawclicks(vector <cord>& ListePoint);
 void drawoutline(vector <cord>& ListePoint);
 

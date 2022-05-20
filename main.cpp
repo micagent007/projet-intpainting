@@ -23,6 +23,8 @@ int main(){
     openWindow(W,H);
     putColorImage(0,0,r,g,b,W,H);
 
+    Image<byte> Image_in_grey(W,H);
+    convertGrey(W,H,r,g,b,Image_in_grey);
 
     std::vector <cord> ListePoint;
     drawclicks(ListePoint);
@@ -36,10 +38,9 @@ int main(){
 
     click();
     Image<bool> TableIn(W,H);
-
+    TableIn.fill(false);
     Espace_blanc_compar_blanc(W,H,ListePoint,r,g,b,TableIn);
     putColorImage(0,0,r,g,b,W,H);
-
     drawoutline(ListePoint);
 
 
