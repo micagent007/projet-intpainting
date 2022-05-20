@@ -243,7 +243,8 @@ void pointsbord(std::vector <pixel_bord> & ListeBord, std::vector <cord> ListeSo
      }
 }
 
-void point_bord_w_omega(int W, int H,Image<double> TableIn,std::vector <cord> & ListeBords){
+void point_bord_w_omega(int W, int H,Image<double> TableIn,std::vector <pixel_bord> & ListepixelBord){
+    std::vector <cord>ListeBord;
     double s=0.;
     for (int x=0;x<W;x++){
         for (int y=0;y<H;y++){
@@ -251,15 +252,17 @@ void point_bord_w_omega(int W, int H,Image<double> TableIn,std::vector <cord> & 
 
                 s=TableIn(x+1,y)+TableIn(x-1,y)+TableIn(x,y+1)+TableIn(x,y-1);
                 if (s!=0){
-                    cout << x<<"y"<<y<< endl;
                     cord P{x,y};
-                    ListeBords.push_back(P);
+                    ListeBord.push_back(P);
                 }
 
 
             }
         }
     }
+    for(int i = 0; i<ListeBord.size();i++){
+        pixel_bord P(ListeBord[i].x, ListeBord[i].y);
+        ListepixelBord.push_back(P);}
 
 }
 void test_points_bord(std::vector <pixel_bord> & ListePointsBord){
