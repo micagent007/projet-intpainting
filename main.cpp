@@ -46,7 +46,6 @@ int main(){
 
     test_points_bord(ListepixelBord);
 
-
     click();
 
 

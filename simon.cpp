@@ -245,13 +245,10 @@ void pointsbord(std::vector <pixel_bord> & ListeBord, std::vector <cord> ListeSo
 
 void point_bord_w_omega(int W, int H,Image<double> TableIn,std::vector <pixel_bord> & ListepixelBord){
     std::vector <cord>ListeBord;
-    double s=0.;
-    for (int x=0;x<W;x++){
-        for (int y=0;y<H;y++){
-            if (TableIn(x,y)==0){
-
-                s=TableIn(x+1,y)+TableIn(x-1,y)+TableIn(x,y+1)+TableIn(x,y-1);
-                if (s!=0){
+    for (int x=1;x<W-1;x++){
+        for (int y=1;y<H-1;y++){
+            if (TableIn(x,y)!=0){
+                if (TableIn(x+1,y)==0 or TableIn(x-1,y)==0 or TableIn(x,y+1)==0 or TableIn(x,y-1)==0){
                     cord P{x,y};
                     ListeBord.push_back(P);
                 }
