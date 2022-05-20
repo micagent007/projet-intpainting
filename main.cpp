@@ -28,20 +28,28 @@ int main(){
 
     std::vector <cord> ListePoint;
     drawclicks(ListePoint);
-
+    for (int k=0;k<ListePoint.size();k++)
+        cout << ListePoint[k].x << "y " << ListePoint[k].y << endl;
     click();
-    std::vector <pixel_bord> ListeBord;
-
-    pointsbord(ListeBord,ListePoint);
-    test_points_bord(ListeBord);
-
-
-    click();
-    Image<bool> TableIn(W,H);
-    TableIn.fill(false);
+    Image<double> TableIn(W,H);
+    TableIn.fill(1);
     Espace_blanc_compar_blanc(W,H,ListePoint,r,g,b,TableIn);
     putColorImage(0,0,r,g,b,W,H);
-    drawoutline(ListePoint);
+    //drawoutline(ListePoint);
+
+    click();
+
+    std::vector <cord> ListeBord;
+
+    point_bord_w_omega(W,H,TableIn,ListeBord);
+    for(int i = 0; i<ListeBord.size();i++){
+        drawPoint(ListeBord[i].x, ListeBord[i].y, BLUE);}
+    std::vector <pixel_bord> ListepixelBord;
+    /*
+    for(int i = 0; i<ListeBord.size();i++){
+        pixel_bord P(ListeBord[i].x, ListeBord[i].y);
+        ListepixelBord.push_back(P);}*/
+    test_points_bord(ListepixelBord);
 
 
     click();

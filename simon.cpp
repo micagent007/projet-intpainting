@@ -1,4 +1,5 @@
 #include <Imagine/Graphics.h>
+#include <Imagine/Images.h>
 #include<cmath>
 using namespace Imagine;
 #include <iostream>
@@ -235,11 +236,31 @@ void pointsbord(std::vector <pixel_bord> & ListeBord, std::vector <cord> ListeSo
     for(int i = 0; i<ListeSommets.size()-1; i++){
         ajout_point_bord(ListeSommets[i].x,ListeSommets[i].y,ListeSommets[i+1].x,ListeSommets[i+1].y,ListePointsBord);
     }
-    ajout_point_bord(ListeSommets[0].x,ListeSommets[0].y,ListeSommets[ListeSommets.size()-1].x,ListeSommets[ListeSommets.size()-1].y,ListePointsBord);
+    ajout_point_bord(ListeSommets[ListeSommets.size()-1].x,ListeSommets[ListeSommets.size()-1].y,ListeSommets[0].x,ListeSommets[0].y,ListePointsBord);
      for(int i = 0; i<ListePointsBord.size();i++){
          pixel_bord P(ListePointsBord[i].x,ListePointsBord[i].y);
          ListeBord.push_back(P);
      }
+}
+
+void point_bord_w_omega(int W, int H,Image<double> TableIn,std::vector <cord> & ListeBords){
+    double s=0.;
+    for (int x=0;x<W;x++){
+        for (int y=0;y<H;y++){
+            if (TableIn(x,y)==0){
+
+                s=TableIn(x+1,y)+TableIn(x-1,y)+TableIn(x,y+1)+TableIn(x,y-1);
+                if (s!=0){
+                    cout << x<<"y"<<y<< endl;
+                    cord P{x,y};
+                    ListeBords.push_back(P);
+                }
+
+
+            }
+        }
+    }
+
 }
 void test_points_bord(std::vector <pixel_bord> & ListePointsBord){
     for(int i = 0; i<ListePointsBord.size();i++){

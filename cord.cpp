@@ -67,7 +67,7 @@ bool autour_blanc(cord P,int W, int H,byte* r, byte* g, byte* b){
         return(true);
     return false;
 }
-void Espace_blanc_compar_blanc(int W, int H,vector <cord> ListePoint ,byte* r, byte* g, byte* b,Image<bool> TablIn){
+void Espace_blanc_compar_blanc(int W, int H,vector <cord> ListePoint ,byte* r, byte* g, byte* b,Image<double> TablIn){
     for (int x=0;x<W;x++)
         for (int y=0;y<H;y++){
             cord P={x,y};
@@ -75,10 +75,10 @@ void Espace_blanc_compar_blanc(int W, int H,vector <cord> ListePoint ,byte* r, b
                 r[x+y*W]=255,
                         g[x+y*W]=255,
                         b[x+y*W]=255,
-                        TablIn(x,y)=true;
+                        TablIn(x,y)=0;
 
             }
-            else{TablIn(x,y)=false;}
+            else{TablIn(x,y)=1;}
         }
     for (int x=0;x<W;x++)
         for (int y=0;y<H;y++){
@@ -87,7 +87,7 @@ void Espace_blanc_compar_blanc(int W, int H,vector <cord> ListePoint ,byte* r, b
                 r[x+y*W]=255,
                         g[x+y*W]=255,
                         b[x+y*W]=255,
-                        TablIn(x,y)=true;
+                        TablIn(x,y)=0;
 
             }
         }
