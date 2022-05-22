@@ -6,6 +6,7 @@ using namespace Imagine;
 using namespace std;
 #include <vector>
 #include "micka.h"
+#include "marius.h"
 #include "pixel_bord.h"
 
 cord_double::cord_double(double x,double y){
@@ -41,41 +42,50 @@ cord_double cord_double::rotation(double angle){
     return V;
 }
 
-std::vector <cord_double> grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord) {
-    std::vector <cord_double> grad;
-    for(int i=0;i<liste_pixel_bord.size() ;i++){
-        grad[i].x=gradient(I,Coords<2>(liste_pixel_bord[i].P.x,liste_pixel_bord[i].P.y)).x();
-        grad[i].y=gradient(I,Coords<2>(liste_pixel_bord[i].P.x,liste_pixel_bord[i].P.y)).y();
-        }
+
+cord_double grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,int type_patch, int p) {
+    cord_double grad(0,0),G(0,0);
+    std::vector <cord> pixels=calc_patch(type_patch,liste_pixel_bord[p].P,I.width(),I.height(),4);
+    for(int i=0;i<pixels.size();i++){
+        G.x=gradient(I,Coords<2>(pixels[i].x,pixels[i].y)).x();
+        G.y=gradient(I,Coords<2>(pixels[i].x,pixels[i].y)).y();
+        if(G.norm2()>grad.norm2())
+            grad=G;
+    }
     return grad;
 }
 
+std::vector <cord_double> liste_grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,int type_patch){
+    std::vector <cord_double> grad_liste;
+    for(int i=0;i<liste_pixel_bord.size();i++){
+        grad_liste[i]=grad(I,liste_pixel_bord,type_patch,i);
+    }
+    return grad_liste;
+}
+
 std::vector <cord_double> normal(std::vector <pixel_bord> liste_pixel_bord){
-    //à modifier, il faut prendre en compte le cas où l'intèrieur n'est pas connexe
     int n=liste_pixel_bord.size();
     std::vector <cord_double> N;
-    cord_double A(0,0),B(0,0);
-    for(int i=1;i<=n;i++){
-        B.x=liste_pixel_bord[(i-1)%n].P.x;
-        B.y=liste_pixel_bord[(i-1)%n].P.y;
-        A.x=liste_pixel_bord[(i+1)%n].P.x;
-        A.y=liste_pixel_bord[(i+1)%n].P.y;
-        N[i%n]=(A-B).rotation(M_PI/2)*(1/(A-B).norm2());
-    }
+
     return N;
 }
+double priority_D_pixel(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord, int numero_pixel,std::vector <cord_double> Grad,std::vector <cord_double> Normale){
+    assert(numero_pixel<liste_pixel_bord.size());
+    cord_double V=Grad[numero_pixel];
 
-double priority_grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord, int n,std::vector <cord_double> Grad,std::vector <cord_double> N){
-    assert(n<liste_pixel_bord.size());
-    cord_double V=Grad[n];
     V.rotation(M_PI/2);
-    return V*N[n];
+    return V*Normale[numero_pixel]/255;
 }
 
-std::vector <double> priority_D(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,std::vector <cord_double> Grad,std::vector <cord_double> N){
+
+std::vector <double> priority_D(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,std::vector <cord_double> Grad,std::vector <cord_double> Normale){
     std::vector<double> D;
     for(int i=0;i<liste_pixel_bord.size();i++){
-        D[i]=priority_grad(I,liste_pixel_bord,i,Grad,N);
+        D[i]=priority_D_pixel(I,liste_pixel_bord,i,Grad,Normale);
     }
     return D;
+}
+
+std::vector <double> liste_D(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,int type_patch){
+    return priority_D(I,liste_pixel_bord,liste_grad(I,liste_pixel_bord,type_patch),normal(liste_pixel_bord));
 }
