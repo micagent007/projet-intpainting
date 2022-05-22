@@ -25,9 +25,9 @@ public:
 };
 
 cord_double operator*(double lambda,cord_double b);
-std::vector <cord_double> grad(const Image<double>& I,std::vector <pixel_bord> liste_pixel_bord);
+std::vector <cord_double> grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord);
 std::vector <cord_double> normal(std::vector <pixel_bord> liste_pixel_bord);
-double priority_grad(const Image<double>& I,std::vector <pixel_bord> liste_pixel_bord, int n,std::vector <cord_double> Grad,std::vector <cord_double> N);
-std::vector <double> priority_D(const Image<double>& I,std::vector <pixel_bord> liste_pixel_bord,std::vector <cord_double> Grad,std::vector <cord_double> N);
+double priority_grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord, int n,std::vector <cord_double> Grad,std::vector <cord_double> N);
+std::vector <double> priority_D(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,std::vector <cord_double> Grad,std::vector <cord_double> N);
 
 #endif // MICKA_H

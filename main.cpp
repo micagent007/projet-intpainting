@@ -23,18 +23,15 @@ int main(){
     openWindow(W,H);
     putColorImage(0,0,r,g,b,W,H);
 
-    Image<byte> Image_in_grey(W,H);
-    convertGrey(W,H,r,g,b,Image_in_grey);
-
     std::vector <cord> ListePoint;
     drawclicks(ListePoint);
 
 
     click();
 
-    Image<double> TableIn(W,H);
-    TableIn.fill(1);
-    Espace_blanc_compar_blanc(W,H,ListePoint,r,g,b,TableIn);
+    Image<double> conf(W,H);
+    conf.fill(1);
+    Espace_blanc_compar_blanc(W,H,ListePoint,r,g,b,conf);
     putColorImage(0,0,r,g,b,W,H);
     drawoutline(ListePoint);
 
@@ -42,7 +39,7 @@ int main(){
 
     std::vector <pixel_bord> ListepixelBord;
 
-    point_bord_w_omega(W,H,TableIn,ListepixelBord);
+    point_bord_w_omega(W,H,conf,ListepixelBord);
 
     test_points_bord(ListepixelBord);
 

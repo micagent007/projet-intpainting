@@ -6,7 +6,7 @@ public:
     double priorite;
     cord P;
 
-    pixel_bord(int I,int J);
+    pixel_bord(int I,int J,double Prio=0.);
 
     bool operator<(pixel_bord p) const {
         return (priorite<p.priorite);

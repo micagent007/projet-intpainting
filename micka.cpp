@@ -41,7 +41,7 @@ cord_double cord_double::rotation(double angle){
     return V;
 }
 
-std::vector <cord_double> grad(const Image<double>& I,std::vector <pixel_bord> liste_pixel_bord) {
+std::vector <cord_double> grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord) {
     std::vector <cord_double> grad;
     for(int i=0;i<liste_pixel_bord.size() ;i++){
         grad[i].x=gradient(I,Coords<2>(liste_pixel_bord[i].P.x,liste_pixel_bord[i].P.y)).x();
@@ -65,14 +65,14 @@ std::vector <cord_double> normal(std::vector <pixel_bord> liste_pixel_bord){
     return N;
 }
 
-double priority_grad(const Image<double>& I,std::vector <pixel_bord> liste_pixel_bord, int n,std::vector <cord_double> Grad,std::vector <cord_double> N){
+double priority_grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord, int n,std::vector <cord_double> Grad,std::vector <cord_double> N){
     assert(n<liste_pixel_bord.size());
     cord_double V=Grad[n];
     V.rotation(M_PI/2);
     return V*N[n];
 }
 
-std::vector <double> priority_D(const Image<double>& I,std::vector <pixel_bord> liste_pixel_bord,std::vector <cord_double> Grad,std::vector <cord_double> N){
+std::vector <double> priority_D(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,std::vector <cord_double> Grad,std::vector <cord_double> N){
     std::vector<double> D;
     for(int i=0;i<liste_pixel_bord.size();i++){
         D[i]=priority_grad(I,liste_pixel_bord,i,Grad,N);
