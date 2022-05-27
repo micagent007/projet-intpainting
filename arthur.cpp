@@ -119,7 +119,7 @@ cord find_q(int W,int H,pixel_bord p_max,Image<double> conf,byte* r,byte* g,byte
     for (int x=siz;x<W-siz;x++){
         for (int y=siz;y<H-siz;y++){
             cord P={x,y};
-            if (conf(x,y)!=0){
+            if (conf(x,y)==1){
                 double d_prov=distance(p_max.P,P,conf,r,g,b);
                 if (d>d_prov){
                     d=d_prov;
@@ -141,17 +141,14 @@ void update_conf(cord p,Image<double> conf){
 }
 void copy_image_data(cord q, cord p,Image<double> conf,byte* &r,byte* &g,byte* &b){
     std::vector<cord> patch_p=calc_patch(type_p,p,conf.width(),conf.height(),siz);
-    std::vector<cord> patch_q=calc_patch(type_p,q,conf.width(),conf.height(),siz);
     for (int k=0;k<patch_p.size();k++){
         if (conf(patch_p[k].x,patch_p[k].y)==0){
             int x_p=patch_p[k].x,
-                    y_p=patch_p[k].y,
-                    x_q=patch_q[k].x,
-                    y_q=patch_q[k].y;
+                    y_p=patch_p[k].y;
+            int x_q=x_p-p.x+q.x;int y_q=y_p-p.y+q.y;
             r[x_p+y_p*conf.width()]=r[x_q+y_q*conf.width()],
                     g[x_p+y_p*conf.width()]=g[x_q+y_q*conf.width()],
                     b[x_p+y_p*conf.width()]=b[x_q+y_q*conf.width()];
-            cout << "r="<< to_string(r[x_p+y_p*conf.width()])<< "g="<<to_string(g[x_p+y_p*conf.width()])<< "b="<< to_string(b[x_p+y_p*conf.width()])<< endl;
 
 
         }
@@ -172,8 +169,9 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
 
     int iter=0;
     while(!omega_is_empty(W,H,conf)){//(1a)
+        putColorImage(0,0,r,g,b,W,H);
         if (iter%2==0){
-            putColorImage(0,0,r,g,b,W,H);
+
         cout <<to_string(iter) <<endl;
         }
         iter++;
@@ -188,11 +186,17 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
         F=prio(ListepixelBord,C,D);//(1b)
 
         pixel_bord p_max=F.pop();//(2a)
-
+        fillCircle(p_max.P.x,p_max.P.y,2,PURPLE);
         cord q=find_q(W,H,p_max,conf,r,g,b);//(2b)
+        fillCircle(q.x,q.y,2,RED);
 
         copy_image_data(q,p_max.P,conf,r,g,b);// (2c)
 
         update_conf(p_max.P,conf); //(3)
+        click();
+
     }
+    cout<<"fin"<<endl;
+    putColorImage(0,0,r,g,b,W,H);
+    click();
 }

@@ -28,7 +28,7 @@ int main(){
 
 
     click();
-//    /Test sans remplissage
+//    //Test sans remplissage
 //    Image<double> conf(W,H);
 //    conf.fill(1);
 //    Espace_blanc_compar_blanc(W,H,ListePoint,r,g,b,conf);

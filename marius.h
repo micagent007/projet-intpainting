@@ -16,7 +16,7 @@ const int carre = 0;
 const int cercle = 1;
 
 const int type_p=0;
-const int siz=4;
+const int siz=10;
 
 std::vector<cord> calc_patch(int type_patch,cord p,int w,int h,int size);
 
