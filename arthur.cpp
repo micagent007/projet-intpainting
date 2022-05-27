@@ -119,10 +119,12 @@ cord find_q(int W,int H,pixel_bord p_max,Image<double> conf,byte* r,byte* g,byte
     for (int x=siz;x<W-siz;x++){
         for (int y=siz;y<H-siz;y++){
             cord P={x,y};
-            double d_prov=distance(p_max.P,P,conf,r,g,b);
-            if (d>d_prov){
-                d=d_prov;
-                q=P;
+            if (conf(x,y)!=0){
+                double d_prov=distance(p_max.P,P,conf,r,g,b);
+                if (d>d_prov){
+                    d=d_prov;
+                    q=P;
+                }
             }
         }
     }
@@ -137,7 +139,7 @@ void update_conf(cord p,Image<double> conf){
             conf(patch[k].x,patch[k].y)=c;
     }
 }
-void copy_image_data(cord q, cord p,Image<double> conf,byte* r,byte* g,byte* b){
+void copy_image_data(cord q, cord p,Image<double> conf,byte* &r,byte* &g,byte* &b){
     std::vector<cord> patch_p=calc_patch(type_p,p,conf.width(),conf.height(),siz);
     std::vector<cord> patch_q=calc_patch(type_p,q,conf.width(),conf.height(),siz);
     for (int k=0;k<patch_p.size();k++){
@@ -149,6 +151,7 @@ void copy_image_data(cord q, cord p,Image<double> conf,byte* r,byte* g,byte* b){
             r[x_p+y_p*conf.width()]=r[x_q+y_q*conf.width()],
                     g[x_p+y_p*conf.width()]=g[x_q+y_q*conf.width()],
                     b[x_p+y_p*conf.width()]=b[x_q+y_q*conf.width()];
+            cout << "r="<< to_string(r[x_p+y_p*conf.width()])<< "g="<<to_string(g[x_p+y_p*conf.width()])<< "b="<< to_string(b[x_p+y_p*conf.width()])<< endl;
 
 
         }
@@ -169,9 +172,9 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
 
     int iter=0;
     while(!omega_is_empty(W,H,conf)){//(1a)
-        if (iter%10==0){
+        if (iter%2==0){
             putColorImage(0,0,r,g,b,W,H);
-        cout <<"couleur chargées" <<endl;
+        cout <<to_string(iter) <<endl;
         }
         iter++;
 

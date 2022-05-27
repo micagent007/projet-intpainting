@@ -19,7 +19,7 @@ void Espace_blanc_compar_blanc(int W, int H,vector <cord> ListePoint ,byte* r, b
 cord find_q(int W,int H,pixel_bord p_max,Image<double> conf,byte* r,byte* g,byte* b);
 bool omega_is_empty(int W, int H,Image<double> conf);
 void update_conf(cord p,Image<double> conf);
-void copy_image_data(cord q, cord p,Image<double> conf,byte* r,byte* g,byte* b);
+void copy_image_data(cord q, cord p,Image<double> conf,byte* &r,byte* &g,byte* &b);
 void main_loop(int W,int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* b);
 
 #endif // ARTHUR_H
