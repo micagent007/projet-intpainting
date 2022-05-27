@@ -15,23 +15,31 @@ std::vector<cord> calc_patch(int type_patch,cord p,int w,int h,int size){
     return v;
 }
 
-void calcul_conf(cord p,std::vector<cord> patch,Image<double> conf){
+double calcul_conf(std::vector<cord> patch,Image<double> conf){
     double s=0;
     for(int i=0;i<patch.size();i++){
-        if(p.x!=patch[i].x && p.y!=patch[i].y)
-            s+=conf(patch[i].x,patch[i].y);
+        s+=conf(patch[i].x,patch[i].y);
     }
     s/=patch.size();
-    conf(p.x,p.y)=s; //diviser par 255 ??
+    return(s);
+}
+
+std::vector<double> Listconf(std::vector<pixel_bord> pix,Image<double> conf){
+    std::vector<double> Listconf;
+    for(int i=0;i<pix.size();i++){
+       std::vector<cord> patch =calc_patch(type_p,pix[i].P,conf.width(),conf.height(),siz);
+       Listconf.push_back(calcul_conf(patch,conf));
+    }
+    return(Listconf);
 }
 
 
 
 
-FilePriorite prio(std::vector<pixel_bord> pix, Image<double> conf, std::vector<double> grad){
+FilePriorite prio(std::vector<pixel_bord> pix, std::vector<double> Listconf, std::vector<double> ListD){
     FilePriorite F;
     for(int i=0;i<pix.size();i++){
-        pix[i].priorite=conf(pix[i].P.x,pix[i].P.y)*grad[i];
+        pix[i].priorite=Listconf[i]*ListD[i];
         F.push(pix[i]);
     }
     return F;

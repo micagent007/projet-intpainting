@@ -21,9 +21,11 @@ const int siz=4;
 std::vector<cord> calc_patch(int type_patch,cord p,int w,int h,int size);
 
 
-void calcul_conf(cord p,std::vector<cord> patch,Image<double> conf);
+double calcul_conf(std::vector<cord> patch,Image<double> conf);
 
-FilePriorite prio(std::vector<pixel_bord> pix, Image<double> conf, std::vector<double> grad);
+std::vector<double> Listconf(std::vector<pixel_bord> pix,Image<double> conf);
+
+FilePriorite prio(std::vector<pixel_bord> pix, std::vector<double> Listconf, std::vector<double> ListD);
 
 double distance(cord p,cord q,Image<double> conf, byte* r, byte* g,byte* b);
 

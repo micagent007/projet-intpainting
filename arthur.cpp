@@ -11,7 +11,7 @@ using namespace std;
 #include "micka.h"
 
 
-void convertGrey(int W,int H, byte* r, byte* g,byte* b, Image<byte> Image_in_grey ){
+void convertGrey(int W,int H, byte* r, byte* g,byte* b, Image<byte> & Image_in_grey ){
     for (int x=0;x<W;x++)
         for (int y=0;y<H;y++){
             Image_in_grey(x,y)=0.299*r[x+y*W]+0.587*g[x+y*W]+0.114*b[x+y*W];
@@ -105,7 +105,7 @@ void Espace_blanc_compar_blanc(int W, int H,vector <cord> ListePoint ,byte* r, b
         }
 }
 
-bool omega_is_empty(int W, int H,Image<double> conf){
+bool omega_isnt_empty(int W, int H,Image<double> conf){
     for (int x=0;x<W;x++)
         for (int y=0;y<H;y++)
             if (conf(x,y)==0)
@@ -113,11 +113,11 @@ bool omega_is_empty(int W, int H,Image<double> conf){
     return(true);
 }
 
-pixel_bord find_q(int W,int H,pixel_bord p_max,Image<double> conf,byte* r,byte* g,byte* b){
+cord find_q(int W,int H,pixel_bord p_max,Image<double> conf,byte* r,byte* g,byte* b){
     double d=1000000.;
     cord q={0,0};
-    for (int x=0;x<W;x++){
-        for (int y=0;y<H;y++){
+    for (int x=siz;x<W-siz;x++){
+        for (int y=siz;y<H-siz;y++){
             cord P={x,y};
             double d_prov=distance(p_max.P,P,conf,r,g,b);
             if (d>d_prov){
@@ -126,39 +126,64 @@ pixel_bord find_q(int W,int H,pixel_bord p_max,Image<double> conf,byte* r,byte* 
             }
         }
     }
-    return(pixel_bord(q.x,q.y,conf(q.x,q.y)));
+    return(q);
 }
 
+void update_conf(cord p,Image<double> conf){
+    std::vector<cord> patch=calc_patch(type_p,p,conf.width(),conf.height(),siz);
+    double c=calcul_conf(patch,conf);
+    for (int k=0;k<patch.size();k++){
+        if (conf(patch[k].x,patch[k].y)==0)
+            conf(patch[k].x,patch[k].y)=c;
+    }
+}
+void copy_image_data(cord q, cord p,Image<double> conf,byte* r,byte* g,byte* b){
+    std::vector<cord> patch_p=calc_patch(type_p,p,conf.width(),conf.height(),siz);
+    std::vector<cord> patch_q=calc_patch(type_p,q,conf.width(),conf.height(),siz);
+    for (int k=0;k<patch_p.size();k++){
+        if (conf(patch_p[k].x,patch_p[k].y)==0){
+            int x_p=patch_p[k].x,
+                    y_p=patch_p[k].y,
+                    x_q=patch_q[k].x,
+                    y_q=patch_q[k].y;
+            r[x_p+y_p*conf.width()]=r[x_q+y_q*conf.width()],
+                    g[x_p+y_p*conf.width()]=g[x_q+y_q*conf.width()],
+                    b[x_p+y_p*conf.width()]=b[x_q+y_q*conf.width()];
+
+
+        }
+    }
+
+}
 
 void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* b){
-    Image<double> conf(W,H);// list of confiance
+    Image<double> conf(W,H);// list of confidence
     conf.fill(1);
     std::vector <pixel_bord> ListepixelBord;//list pixel who compose the surface
     Image<byte> Image_in_grey(W,H); // our image in grey
     std::vector <double> D; // this will be our list of "data term"
+    std::vector <double> C; // this will be our list of confidence for pixel_bord
     FilePriorite F; // our file of Priority
 
     Espace_blanc_compar_blanc(W,H,ListePoint,r,g,b,conf);// initialize the conf (1)
 
-    while(omega_is_empty(W,H,conf)){//(1a)
+    while(omega_isnt_empty(W,H,conf)){//(1a)
 
-        point_bord_w_omega(W,H,conf,ListepixelBord);//(1a) we compute the new list pixel who compose the surface
+        ListepixelBord=point_bord_w_omega(W,H,conf);//(1a) we compute the new list pixel who compose the surface
 
         convertGrey(W,H,r,g,b,Image_in_grey);//in order to compute our gradient and so the data term
 
         D=liste_D(Image_in_grey,ListepixelBord);// we commpute all the data term of the pixel_bord in the surface
+        C=Listconf(ListepixelBord,conf);
 
-        F=prio(ListepixelBord,conf,D);//(1b)
+        F=prio(ListepixelBord,C,D);//(1b)
 
         pixel_bord p_max=F.pop();//(2a)
 
-        pixel_bord q=find_q(W,H,p_max,conf,r,g,b);//(2b)
+        cord q=find_q(W,H,p_max,conf,r,g,b);//(2b)
 
-        // A faire 2c et 3
+        copy_image_data(q,p_max.P,conf,r,g,b);// (2c)
 
-
-
-
-
+        update_conf(p_max.P,conf); //(3)
     }
 }

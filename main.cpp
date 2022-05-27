@@ -39,7 +39,7 @@ int main(){
 
     std::vector <pixel_bord> ListepixelBord;
 
-    point_bord_w_omega(W,H,conf,ListepixelBord);
+    ListepixelBord=point_bord_w_omega(W,H,conf);
 
     test_points_bord(ListepixelBord);
 
