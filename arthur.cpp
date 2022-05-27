@@ -105,7 +105,7 @@ void Espace_blanc_compar_blanc(int W, int H,vector <cord> ListePoint ,byte* r, b
         }
 }
 
-bool omega_isnt_empty(int W, int H,Image<double> conf){
+bool omega_is_empty(int W, int H,Image<double> conf){
     for (int x=0;x<W;x++)
         for (int y=0;y<H;y++)
             if (conf(x,y)==0)
@@ -168,8 +168,7 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
     Espace_blanc_compar_blanc(W,H,ListePoint,r,g,b,conf);// initialize the conf (1)
 
     int iter=0;
-    while(omega_isnt_empty(W,H,conf)){//(1a)
-
+    while(!omega_is_empty(W,H,conf)){//(1a)
         if (iter%10==0){
             putColorImage(0,0,r,g,b,W,H);
             click();}
