@@ -117,6 +117,6 @@ std::vector <double> priority_D(const Image<byte>& I,std::vector <pixel_bord> li
     return D;
 }
 
-std::vector <double> liste_D(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,int type_patch){
-    return priority_D(I,liste_pixel_bord,liste_grad(I,liste_pixel_bord,type_patch),normal(liste_pixel_bord));
+std::vector <double> liste_D(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,int type_patch,const Image<double>& confiance){
+    return priority_D(I,liste_pixel_bord,liste_grad(I,liste_pixel_bord,type_patch),normal(liste_pixel_bord,I,confiance));
 }

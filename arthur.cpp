@@ -179,7 +179,7 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
 
         convertGrey(W,H,r,g,b,Image_in_grey);//in order to compute our gradient and so the data term
 
-        D=liste_D(Image_in_grey,ListepixelBord);// we commpute all the data term of the pixel_bord in the surface
+        D=liste_D(Image_in_grey,ListepixelBord,type_p,conf);// we commpute all the data term of the pixel_bord in the surface
         C=Listconf(ListepixelBord,conf);
 
         F=prio(ListepixelBord,C,D);//(1b)
