@@ -171,7 +171,8 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
     while(!omega_is_empty(W,H,conf)){//(1a)
         if (iter%10==0){
             putColorImage(0,0,r,g,b,W,H);
-            click();}
+        cout <<"couleur chargées" <<endl;
+        }
         iter++;
 
         ListepixelBord=point_bord_w_omega(W,H,conf);//(1a) we compute the new list pixel who compose the surface

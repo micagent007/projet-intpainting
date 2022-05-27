@@ -46,8 +46,8 @@ cord_double grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,
     cord_double grad(0,0),G(0,0);
     std::vector <cord> pixels=calc_patch(type_patch,liste_pixel_bord[p].P,I.width(),I.height(),4);
     for(int i=0;i<pixels.size();i++){
-        G.x=gradient(I,Coords<2>(pixels[i].x,pixels[i].y)).x();
-        G.y=gradient(I,Coords<2>(pixels[i].x,pixels[i].y)).y();
+        G.x=double(gradient(I,Coords<2>(pixels[i].x,pixels[i].y)).x());
+        G.y=double(gradient(I,Coords<2>(pixels[i].x,pixels[i].y)).y());
         if(G.norm2()>grad.norm2())
             grad=G;
     }
@@ -57,7 +57,7 @@ cord_double grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,
 std::vector <cord_double> liste_grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,int type_patch){
     std::vector <cord_double> grad_liste;
     for(int i=0;i<liste_pixel_bord.size();i++){
-        grad_liste[i]=grad(I,liste_pixel_bord,type_patch,i);
+        grad_liste.push_back(grad(I,liste_pixel_bord,type_patch,i));
     }
     return grad_liste;
 }
@@ -112,7 +112,7 @@ double priority_D_pixel(const Image<byte>& I,std::vector <pixel_bord> liste_pixe
 std::vector <double> priority_D(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,std::vector <cord_double> Grad,std::vector <cord_double> Normale){
     std::vector<double> D;
     for(int i=0;i<liste_pixel_bord.size();i++){
-        D[i]=priority_D_pixel(I,liste_pixel_bord,i,Grad,Normale);
+        D.push_back(priority_D_pixel(I,liste_pixel_bord,i,Grad,Normale));
     }
     return D;
 }
