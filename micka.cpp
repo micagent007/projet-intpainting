@@ -42,7 +42,10 @@ cord_double cord_double::rotation(double angle){
     return V;
 }
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 4fb39825ce833c17288f4e563cf018f1040bfe9d
 cord_double grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,int type_patch, int p) {
     cord_double grad(0,0),G(0,0);
     std::vector <cord> pixels=calc_patch(type_patch,liste_pixel_bord[p].P,I.width(),I.height(),4);
@@ -73,11 +76,20 @@ double priority_D_pixel(const Image<byte>& I,std::vector <pixel_bord> liste_pixe
     assert(numero_pixel<liste_pixel_bord.size());
     cord_double V=Grad[numero_pixel];
 
+<<<<<<< HEAD
+double priority_D_pixel(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord, int numero_pixel,std::vector <cord_double> Grad,std::vector <cord_double> Normale){
+    assert(numero_pixel<liste_pixel_bord.size());
+    cord_double V=Grad[numero_pixel];
+=======
+>>>>>>> 4fb39825ce833c17288f4e563cf018f1040bfe9d
     V.rotation(M_PI/2);
     return V*Normale[numero_pixel]/255;
 }
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 4fb39825ce833c17288f4e563cf018f1040bfe9d
 std::vector <double> priority_D(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,std::vector <cord_double> Grad,std::vector <cord_double> Normale){
     std::vector<double> D;
     for(int i=0;i<liste_pixel_bord.size();i++){
