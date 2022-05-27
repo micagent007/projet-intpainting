@@ -30,5 +30,6 @@ std::vector <cord_double> normal(std::vector <pixel_bord> liste_pixel_bord);
 double priority_D_pixel(const Image<double>& I,std::vector <pixel_bord> liste_pixel_bord, int numero_pixel,std::vector <cord_double> Grad,std::vector <cord_double> Normale);
 std::vector <double> priority_D(const Image<double>& I,std::vector <pixel_bord> liste_pixel_bord,std::vector <cord_double> Grad,std::vector <cord_double> Normale);
 std::vector <double> liste_D(const Image<double>& I,std::vector <pixel_bord> liste_pixel_bord);
+void ordre(std::vector <cord> pixels);
 
 #endif // MICKA_H
