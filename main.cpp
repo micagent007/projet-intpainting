@@ -28,23 +28,23 @@ int main(){
 
 
     click();
+//    /Test sans remplissage
+//    Image<double> conf(W,H);
+//    conf.fill(1);
+//    Espace_blanc_compar_blanc(W,H,ListePoint,r,g,b,conf);
+//    putColorImage(0,0,r,g,b,W,H);
+//    drawoutline(ListePoint);
 
-    Image<double> conf(W,H);
-    conf.fill(1);
-    Espace_blanc_compar_blanc(W,H,ListePoint,r,g,b,conf);
-    putColorImage(0,0,r,g,b,W,H);
-    drawoutline(ListePoint);
+//    click();
 
-    click();
+//    std::vector <pixel_bord> ListepixelBord;
 
-    std::vector <pixel_bord> ListepixelBord;
+//    ListepixelBord=point_bord_w_omega(W,H,conf);
 
-    ListepixelBord=point_bord_w_omega(W,H,conf);
+//    test_points_bord(ListepixelBord);
 
-    test_points_bord(ListepixelBord);
-
-    click();
-
+//    click();
+    main_loop(W,H,ListePoint,r,g,b);
 
 
 
