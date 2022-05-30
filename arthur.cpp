@@ -125,6 +125,7 @@ cord find_q(int W,int H,pixel_bord p_max,Image<double> conf,byte* r,byte* g,byte
                     d=d_prov;
                     q=P;
                 }
+
             }
         }
     }
@@ -155,6 +156,7 @@ void copy_image_data(cord q, cord p,Image<double> conf,byte* &r,byte* &g,byte* &
     }
 
 }
+
 
 void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* b){
     Image<double> conf(W,H);// list of confidence
@@ -193,7 +195,7 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
         copy_image_data(q,p_max.P,conf,r,g,b);// (2c)
 
         update_conf(p_max.P,conf); //(3)
-        click();
+        //click();
 
     }
     cout<<"fin"<<endl;

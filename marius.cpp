@@ -56,16 +56,14 @@ double distance(cord p,cord q,Image<double> conf, byte* r, byte* g,byte* b){
             continue;
         if (conf(xq,yq)!=1)
             return(100000000000.);
-        if(conf(xp,yp)==0){
-            d+=sqrt(3*pow(255,2));
-        }
-        else{
-            double dp=0;
+        if(conf(xp,yp)==0)
+            continue;
+        double dp=0;
         dp+=pow(r[xp+conf.width()*yp]-r[xq+conf.width()*yq],2);
         dp+=pow(g[xp+conf.width()*yp]-g[xq+conf.width()*yq],2);
         dp+=pow(b[xp+conf.width()*yp]-b[xq+conf.width()*yq],2);
         d+=sqrt(dp);
-        }
+
     }
     return d;
 }
