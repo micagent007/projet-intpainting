@@ -11,6 +11,7 @@ using namespace std;
 #include "cord.h"
 #include "pixel_bord.h"
 #include "priorite.h"
+#include "micka.h"
 
 const int carre = 0;
 const int cercle = 1;
@@ -29,7 +30,7 @@ FilePriorite prio(std::vector<pixel_bord> pix, std::vector<double> Listconf, std
 
 double distance(cord p,cord q,Image<double> conf, byte* r, byte* g,byte* b);
 
-
+cord_double grad_rev(cord p, Image<double> conf, Image<byte> grey);
 
 
 #endif // MARIUS_H

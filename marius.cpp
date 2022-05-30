@@ -68,3 +68,18 @@ double distance(cord p,cord q,Image<double> conf, byte* r, byte* g,byte* b){
     return d;
 }
 
+cord_double grad_rev(cord p, Image<double> conf, Image<byte> grey){
+    cord_double g(0,0);
+    int x=p.x; int y=p.y;
+    if(conf(x+1,y)!=0){
+        g.x=grey(x+1,y)-grey(x,y);
+    }else if(conf(x-1,y)!=0){
+        g.x=grey(x,y)-grey(x-1,y);
+    }else {g.x=0;}
+    if(conf(x,y+1)!=0){
+        g.y=grey(x,y+1)-grey(x,y);
+    }else if(conf(x,y-1)!=0){
+        g.y=grey(x,y)-grey(x,y-1);
+    }else {g.y=0;}
+    return g;
+}
