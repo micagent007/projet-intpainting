@@ -21,6 +21,7 @@ cord find_q(int W,int H,pixel_bord p_max,Image<double> conf,byte* r,byte* g,byte
 bool omega_is_empty(int W, int H,Image<double> conf);
 void update_conf(cord p,Image<double> conf);
 void copy_image_data(cord q, cord p,Image<double> conf,byte* &r,byte* &g,byte* &b);
+void copy_image_data_for_gradient_nul(cord p,Image<double> conf,byte* &r,byte* &g,byte* &b);
 void main_loop(int W,int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* b);
 
 #endif // ARTHUR_H
