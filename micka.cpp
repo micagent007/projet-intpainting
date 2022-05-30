@@ -48,22 +48,26 @@ void cord_double::normalize(){
     return;
 }
 
-cord_double grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,int type_patch, int p) {
+cord_double grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,int type_patch, int p,const Image<double>& confiance) {
     cord_double grad(0,0),G(0,0);
     std::vector <cord> pixels=calc_patch(type_patch,liste_pixel_bord[p].P,I.width(),I.height(),siz);
     for(int i=0;i<pixels.size();i++){
-        G.x=double(gradient(I,Coords<2>(pixels[i].x,pixels[i].y)).x());
-        G.y=double(gradient(I,Coords<2>(pixels[i].x,pixels[i].y)).y());
+        if(confiance(pixels[i].x,pixels[i].y)==0)
+            G={0,0};
+        else{
+            G.x=double(gradient(I,Coords<2>(pixels[i].x,pixels[i].y)).x());
+            G.y=double(gradient(I,Coords<2>(pixels[i].x,pixels[i].y)).y());
+        }
         if(G.norm2()>grad.norm2())
             grad=G;
     }
     return grad;
 }
 
-std::vector <cord_double> liste_grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,int type_patch){
+std::vector <cord_double> liste_grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,int type_patch,const Image<double>& confiance){
     std::vector <cord_double> grad_liste;
     for(int i=0;i<liste_pixel_bord.size();i++){
-        grad_liste.push_back(grad(I,liste_pixel_bord,type_patch,i));
+        grad_liste.push_back(grad(I,liste_pixel_bord,type_patch,i,confiance));
     }
     return grad_liste;
 }
@@ -125,5 +129,5 @@ std::vector <double> priority_D(const Image<byte>& I,std::vector <pixel_bord> li
 }
 
 std::vector <double> liste_D(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,int type_patch,const Image<double>& confiance){
-    return priority_D(I,liste_pixel_bord,liste_grad(I,liste_pixel_bord,type_patch),normal(liste_pixel_bord,I,confiance));
+    return priority_D(I,liste_pixel_bord,liste_grad(I,liste_pixel_bord,type_patch,confiance),normal(liste_pixel_bord,I,confiance));
 }
