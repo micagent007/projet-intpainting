@@ -67,7 +67,7 @@ cord_double grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,
 std::vector <cord_double> liste_grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,int type_patch,const Image<double>& confiance){
     std::vector <cord_double> grad_liste;
     for(int i=0;i<liste_pixel_bord.size();i++){
-        grad_liste.push_back(grad(I,liste_pixel_bord,type_patch,i,confiance));
+        grad_liste.push_back(grad_rev(liste_pixel_bord[i].P,confiance,I));
     }
     return grad_liste;
 }
