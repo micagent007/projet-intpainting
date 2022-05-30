@@ -9,6 +9,7 @@ using namespace std;
 #include <vector>
 #include "cord.h"
 #include "pixel_bord.h"
+#include "micka.h"
 
 void convertGrey(int W,int H, byte* r, byte* g,byte* b, Image<byte> & Image_in_grey );
 void drawclicks(vector <cord>& ListePoint);
