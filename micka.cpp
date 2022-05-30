@@ -48,6 +48,22 @@ void cord_double::normalize(){
     return;
 }
 
+cord_double grad_contour(const Image<byte>& I, std::vector<pixel_bord> liste_pixel_bord, int type_patch, int p, const Image<double>&confiance){
+    cord_double grad(0,0),G(0,0);
+    std::vector <cord> pixels=calc_patch(type_patch,liste_pixel_bord[p].P,I.width(),I.height(),siz);
+    for(int i=0;i<pixels.size();i++){
+        if(confiance(pixels[i].x,pixels[i].y)==0)
+            G={0,0};
+        else{
+            G.x=grad_rev(liste_pixel_bord[p].P,confiance,I).x;
+            G.y=grad_rev(liste_pixel_bord[p].P,confiance,I).y;
+        }
+        if(G.norm2()>grad.norm2())
+            grad=G;
+    }
+    return grad;
+}
+
 cord_double grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,int type_patch, int p,const Image<double>& confiance) {
     cord_double grad(0,0),G(0,0);
     std::vector <cord> pixels=calc_patch(type_patch,liste_pixel_bord[p].P,I.width(),I.height(),siz);
@@ -67,7 +83,7 @@ cord_double grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,
 std::vector <cord_double> liste_grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,int type_patch,const Image<double>& confiance){
     std::vector <cord_double> grad_liste;
     for(int i=0;i<liste_pixel_bord.size();i++){
-        grad_liste.push_back(grad_rev(liste_pixel_bord[i].P,confiance,I));
+        grad_liste.push_back(grad_contour(I,liste_pixel_bord,type_patch,i,confiance));
     }
     return grad_liste;
 }
