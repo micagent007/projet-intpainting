@@ -185,7 +185,6 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
     FilePriorite F; // our file of Priority
 
     Espace_blanc_compar_blanc(W,H,ListePoint,r,g,b,conf);// initialize the conf (1)
-    putColorImage(0,0,r,g,b,W,H);
 
     int iter=0;
     while(!omega_is_empty(W,H,conf)){//(1a)
@@ -214,7 +213,6 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
 
         else{
             cord q=find_q(W,H,p_max,conf,r,g,b);//(2b)
-            fillCircle(q.x,q.y,2,RED);
             copy_image_data(q,p_max.P,conf,r,g,b);// (2c)}
         }
         update_conf(p_max.P,conf); //(3)
