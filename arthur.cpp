@@ -157,6 +157,23 @@ void copy_image_data(cord q, cord p,Image<double> conf,byte* &r,byte* &g,byte* &
 
 }
 
+void copy_image_data_for_gradient_nul(cord p,Image<double> conf,byte* &r,byte* &g,byte* &b){
+    std::vector<cord> patch_p=calc_patch(type_p,p,conf.width(),conf.height(),siz);
+    for (int k=0;k<patch_p.size();k++){
+        if (conf(patch_p[k].x,patch_p[k].y)==0){
+            int x_p=patch_p[k].x,
+                    y_p=patch_p[k].y;
+            int xpix=p.x;int ypix=p.y;
+            r[x_p+y_p*conf.width()]=r[xpix+ypix*conf.width()],
+                    g[x_p+y_p*conf.width()]=g[xpix+ypix*conf.width()],
+                    b[x_p+y_p*conf.width()]=b[xpix+ypix*conf.width()];
+
+
+        }
+    }
+
+}
+
 
 void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* b){
     Image<double> conf(W,H);// list of confidence
@@ -168,6 +185,7 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
     FilePriorite F; // our file of Priority
 
     Espace_blanc_compar_blanc(W,H,ListePoint,r,g,b,conf);// initialize the conf (1)
+    putColorImage(0,0,r,g,b,W,H);
 
     int iter=0;
     while(!omega_is_empty(W,H,conf)){//(1a)
@@ -189,13 +207,17 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
 
         pixel_bord p_max=F.pop();//(2a)
         fillCircle(p_max.P.x,p_max.P.y,2,PURPLE);
-        cord q=find_q(W,H,p_max,conf,r,g,b);//(2b)
-        fillCircle(q.x,q.y,2,RED);
+        cord_double grad=grad_rev(p_max.P,conf,Image_in_grey);
+        if (grad.norm2()<=3){
+            copy_image_data_for_gradient_nul(p_max.P,conf,r,g,b);
+        }
 
-        copy_image_data(q,p_max.P,conf,r,g,b);// (2c)
-
+        else{
+            cord q=find_q(W,H,p_max,conf,r,g,b);//(2b)
+            fillCircle(q.x,q.y,2,RED);
+            copy_image_data(q,p_max.P,conf,r,g,b);// (2c)}
+        }
         update_conf(p_max.P,conf); //(3)
-        //click();
 
     }
     cout<<"fin"<<endl;
