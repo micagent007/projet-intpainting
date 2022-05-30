@@ -42,14 +42,23 @@ cord_double cord_double::rotation(double angle){
     return V;
 }
 
+void cord_double::normalize(){
+    x=x/this->norm2();
+    y=y/this->norm2();
+    return;
+}
+
 cord_double grad(const Image<byte>& I,std::vector <pixel_bord> liste_pixel_bord,int type_patch, int p) {
     cord_double grad(0,0),G(0,0);
-    std::vector <cord> pixels=calc_patch(type_patch,liste_pixel_bord[p].P,I.width(),I.height(),4);
+    std::vector <cord> pixels=calc_patch(type_patch,liste_pixel_bord[p].P,I.width(),I.height(),siz);
     for(int i=0;i<pixels.size();i++){
         G.x=double(gradient(I,Coords<2>(pixels[i].x,pixels[i].y)).x());
+        cout << "derivee x  " << G.x << endl;
         G.y=double(gradient(I,Coords<2>(pixels[i].x,pixels[i].y)).y());
+        cout << "derivee y  " << G.y << endl;
         if(G.norm2()>grad.norm2())
             grad=G;
+        cout<< i <<endl;
     }
     return grad;
 }
@@ -97,6 +106,7 @@ std::vector <cord_double> normal(std::vector <pixel_bord> liste_pixel_bord,const
         }
         cord_double tangent=p_apres-p_avant;
         cord_double normale=tangent.rotation(M_PI/2);
+        normale.normalize();
         N.push_back(normale);
     }
     return N;
@@ -106,6 +116,8 @@ double priority_D_pixel(const Image<byte>& I,std::vector <pixel_bord> liste_pixe
     assert(numero_pixel<liste_pixel_bord.size());
     cord_double V=Grad[numero_pixel];
     V.rotation(M_PI/2);
+    cout << "valeur de D  " << abs(V*Normale[numero_pixel])/255 <<endl;
+    click();
     return abs(V*Normale[numero_pixel])/255;
 }
 

@@ -18,10 +18,11 @@ public:
 
     cord_double operator+(cord_double b) ; // Sum
     cord_double operator-(cord_double b) ; // Difference
-    double norm2 () ; // Euclide an norm
+    double norm2 () ; // Euclidean norm
     cord_double operator*(double lambda) ; // Mult . scalar
     double operator*(cord_double v);
     cord_double rotation(double angle);
+    void normalize();
 };
 
 cord_double operator*(double lambda,cord_double b);
