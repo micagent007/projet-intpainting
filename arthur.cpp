@@ -133,7 +133,7 @@ cord find_q(int W,int H,pixel_bord p_max,Image<double> conf,byte* r,byte* g,byte
 }
 
 void update_conf(cord p,Image<double> conf){
-    std::vector<cord> patch=calc_patch(type_p,p,conf.width(),conf.height(),siz);
+    std::vector<cord> patch=calc_patch(p,conf.width(),conf.height(),siz);
     double c=calcul_conf(patch,conf);
     for (int k=0;k<patch.size();k++){
         if (conf(patch[k].x,patch[k].y)==0)
@@ -141,7 +141,7 @@ void update_conf(cord p,Image<double> conf){
     }
 }
 void copy_image_data(cord q, cord p,Image<double> conf,byte* &r,byte* &g,byte* &b){
-    std::vector<cord> patch_p=calc_patch(type_p,p,conf.width(),conf.height(),siz);
+    std::vector<cord> patch_p=calc_patch(p,conf.width(),conf.height(),siz);
     for (int k=0;k<patch_p.size();k++){
         if (conf(patch_p[k].x,patch_p[k].y)==0){
             int x_p=patch_p[k].x,
@@ -158,7 +158,7 @@ void copy_image_data(cord q, cord p,Image<double> conf,byte* &r,byte* &g,byte* &
 }
 
 void copy_image_data_for_gradient_nul(cord p,Image<double> conf,byte* &r,byte* &g,byte* &b){
-    std::vector<cord> patch_p=calc_patch(type_p,p,conf.width(),conf.height(),siz);
+    std::vector<cord> patch_p=calc_patch(p,conf.width(),conf.height(),siz);
     for (int k=0;k<patch_p.size();k++){
         if (conf(patch_p[k].x,patch_p[k].y)==0){
             int x_p=patch_p[k].x,
@@ -199,7 +199,7 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
 
         convertGrey(W,H,r,g,b,Image_in_grey);//in order to compute our gradient and so the data term
 
-        D=liste_D(Image_in_grey,ListepixelBord,type_p,conf);// we commpute all the data term of the pixel_bord in the surface
+        D=liste_D(Image_in_grey,ListepixelBord,conf);// we commpute all the data term of the pixel_bord in the surface
         C=Listconf(ListepixelBord,conf);
 
         F=prio(ListepixelBord,C,D);//(1b)

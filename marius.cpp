@@ -1,13 +1,13 @@
 #include "marius.h"
 
 
-std::vector<cord> calc_patch(int type_patch,cord p,int w,int h,int size){
+std::vector<cord> calc_patch(cord p,int w,int h,int size){
     std::vector<cord> v;
     for(int x=0;x<2*size+1;x++){
         for(int y=0;y<2*size+1;y++){
             cord p_patch;p_patch.x=x-size+p.x;p_patch.y=y-size+p.y;
             if(p_patch.x>0&&p_patch.x<w&&p_patch.y>0&&p_patch.y<h){
-                if((type_patch==carre&&norminf(p-p_patch)<=size)||(type_patch==cercle&&norm2(p-p_patch)<=size))
+                if((type_p==carre&&norminf(p-p_patch)<=size)||(type_p==cercle&&norm2(p-p_patch)<=size))
                     v.push_back(p_patch);
             }
         }
@@ -24,10 +24,10 @@ double calcul_conf(std::vector<cord> patch,Image<double> conf){
     return(s);
 }
 
-std::vector<double> Listconf(std::vector<pixel_bord> pix,int type_patch,Image<double> conf){
+std::vector<double> Listconf(std::vector<pixel_bord> pix,Image<double> conf){
     std::vector<double> Listconf;
     for(int i=0;i<pix.size();i++){
-       std::vector<cord> patch =calc_patch(type_patch,pix[i].P,conf.width(),conf.height(),siz);
+       std::vector<cord> patch =calc_patch(pix[i].P,conf.width(),conf.height(),siz);
        Listconf.push_back(calcul_conf(patch,conf));
     }
     return(Listconf);
@@ -47,7 +47,7 @@ FilePriorite prio(std::vector<pixel_bord> pix, std::vector<double> Listconf, std
 
 double distance(cord p,cord q,Image<double> conf, byte* r, byte* g,byte* b){
     int w=conf.width();int h=conf.height();
-    std::vector<cord> patch_p=calc_patch(type_p,p,w,h,siz);
+    std::vector<cord> patch_p=calc_patch(p,w,h,siz);
     double d=0;
     for(int i=0;i<patch_p.size();i++){
         int xp=patch_p[i].x;int yp=patch_p[i].y;
