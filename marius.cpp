@@ -83,3 +83,66 @@ cord_double grad_rev(cord p, Image<double> conf, Image<byte> grey){
     }else {g.y=0;}
     return g;
 }
+
+
+cord find_q_bis(int W,int H,pixel_bord p_max,Image<double> conf,byte* r,byte* g,byte* b,cord_double grad){
+    cord q={W/2,H/2};
+    double d=distance(p_max.P,q,conf,r,g,b)+1000000;
+
+    grad.normalize();
+
+
+    for (int x=siz;x<W-siz;x++){
+        for (int y=siz;y<H-siz;y++){
+            cord P={x,y};
+
+            cord_double p={double(x)-p_max.P.x,double(y)-p_max.P.y};
+            p.normalize();
+            double s=abs(grad*p);
+
+            if (conf(x,y)==1 && s<tol){
+                double d_prov=distance(p_max.P,P,conf,r,g,b);
+                if (d>d_prov){
+                    d=d_prov;
+                    q=P;
+                }
+
+            }
+        }
+    }
+    return(q);
+}
+cord find_q_ter(pixel_bord p_max,Image<double> conf,byte* r,byte* g,byte* b,cord_double grad){
+    cord q={conf.width()/2,conf.height()/2};
+    double d=distance(p_max.P,q,conf,r,g,b)+1000000;
+    if(grad.y<0) grad=-1*grad;
+    grad.normalize();
+    double ecart=(conf.width()+conf.height())/ecart_div;
+
+    cord_double P_sup={double(p_max.P.x)+ecart*grad.x,double(p_max.P.y)+ecart*grad.y};
+    cord_double P_inf={double(p_max.P.x)-ecart*grad.x,double(p_max.P.y)-ecart*grad.y};
+    bool vert=(P_sup.y==P_inf.y);
+
+    for (int x=siz;x<conf.width()-siz;x++){
+        for (int y=siz;y<conf.height()-siz;y++){
+            cord P={x,y};
+
+
+            if (conf(x,y)==1 &&((vert&&P.x<p_max.P.x+ecart&&P.x>p_max.P.x-ecart)
+                                ||
+                                (P.y<P_sup.y-(grad.x/grad.y)*(double(P.x)-P_sup.x)
+                                &&P.y>P_inf.y-(grad.x/grad.y)*(double(P.x)-P_inf.x)))){
+
+
+                double d_prov=distance(p_max.P,P,conf,r,g,b);
+                if (d>d_prov){
+                    d=d_prov;
+                    q=P;
+                }
+
+            }
+        }
+    }
+    return q;
+}
+

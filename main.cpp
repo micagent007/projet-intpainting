@@ -19,11 +19,12 @@ int main(){
     byte* g;
     byte* b;
 
-    loadColorImage(srcPath("image_bico.png"),r,g,b,W,H);
+    loadColorImage(srcPath("Capture1.png"),r,g,b,W,H);
     openWindow(W,H);
     putColorImage(0,0,r,g,b,W,H);
 
     std::vector <cord> ListePoint;
+
 
 //    //Test sans remplissage
 //    Image<double> conf(W,H);

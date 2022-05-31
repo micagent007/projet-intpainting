@@ -19,18 +19,25 @@ const int cercle = 1;
 const int type_p=0;
 const int siz=10;
 
-std::vector<cord> calc_patch(cord p,int w,int h,int size);
+const double tol=0.5;
+const double ecart_div=20;
 
+
+
+std::vector<cord> calc_patch(cord p,int w,int h,int size);
 
 double calcul_conf(std::vector<cord> patch,Image<double> conf);
 
-std::vector<double> Listconf(std::vector<pixel_bord> pix,Image<double> conf);// dans le rapport
+std::vector<double> Listconf(std::vector<pixel_bord> pix,Image<double> conf);
 
-FilePriorite prio(std::vector<pixel_bord> pix, std::vector<double> Listconf, std::vector<double> ListD);// dans le rapport
+FilePriorite prio(std::vector<pixel_bord> pix, std::vector<double> Listconf, std::vector<double> ListD);
 
 double distance(cord p,cord q,Image<double> conf, byte* r, byte* g,byte* b);
 
 cord_double grad_rev(cord p, Image<double> conf, Image<byte> grey);
 
+//
+cord find_q_bis(int W,int H,pixel_bord p_max,Image<double> conf,byte* r,byte* g,byte* b,cord_double grad);
+cord find_q_ter(pixel_bord p_max,Image<double> conf,byte* r,byte* g,byte* b,cord_double grad);
 
 #endif // MARIUS_H

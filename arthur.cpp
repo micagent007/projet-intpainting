@@ -62,7 +62,8 @@ bool in(std::vector <cord> ListePoint,cord P){
     cord O=ListePoint[ListePoint.size()-1];
     cord Q=ListePoint[0];
     s+=angle(O-P,Q-P);
-    if ((2*M_PI-s)<1e-10)
+    //if ((2*M_PI-s)<1e-10)
+    if (2*M_PI-abs(s)<0.1)
         return(true);
 
     return(false);
@@ -89,6 +90,7 @@ void Espace_blanc_compar_blanc(int W, int H,vector <cord> ListePoint ,byte* r, b
                         b[x+y*W]=255,
                         conf(x,y)=0;
 
+
             }
             else{conf(x,y)=1;}
         }
@@ -96,10 +98,12 @@ void Espace_blanc_compar_blanc(int W, int H,vector <cord> ListePoint ,byte* r, b
         for (int y=0;y<H;y++){
             cord P={x,y};
             if (autour_blanc(P,W,H,r,g,b)){
+
                 r[x+y*W]=255,
                         g[x+y*W]=255,
                         b[x+y*W]=255,
                         conf(x,y)=0;
+
 
             }
         }
@@ -187,7 +191,10 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
     drawclicks(ListePoint);
     Espace_blanc_compar_blanc(W,H,ListePoint,r,g,b,conf);// initialize the conf (1)
 
+
     while(!omega_is_empty(W,H,conf)){//(1a)
+
+
         putColorImage(0,0,r,g,b,W,H);
 
         ListepixelBord=point_bord_w_omega(W,H,conf);//(1a) we compute the new list pixel who compose the surface
@@ -207,7 +214,18 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
         }
 
         else{
-            cord q=find_q(W,H,p_max,conf,r,g,b);//(2b)
+            //cord q=find_q(W,H,p_max,conf,r,g,b);//(2b)
+
+
+            //Marius;
+            cord_double grb={grad.x,grad.y};
+            grb.normalize();
+            drawLine(p_max.P.x,p_max.P.y,p_max.P.x+10*grb.x,p_max.P.y+10*grb.y,RED);
+            //cord q=find_q_bis(W,H,p_max,conf,r,g,b,grad);
+            cord q=find_q_ter(p_max,conf,r,g,b,grad);
+            //
+
+
             copy_image_data(q,p_max.P,conf,r,g,b);// (2c)}
         }
         update_conf(p_max.P,conf); //(3)
