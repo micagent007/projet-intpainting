@@ -24,10 +24,10 @@ double calcul_conf(std::vector<cord> patch,Image<double> conf){
     return(s);
 }
 
-std::vector<double> Listconf(std::vector<pixel_bord> pix,Image<double> conf){
+std::vector<double> Listconf(std::vector<pixel_bord> pix,int type_patch,Image<double> conf){
     std::vector<double> Listconf;
     for(int i=0;i<pix.size();i++){
-       std::vector<cord> patch =calc_patch(type_p,pix[i].P,conf.width(),conf.height(),siz);
+       std::vector<cord> patch =calc_patch(type_patch,pix[i].P,conf.width(),conf.height(),siz);
        Listconf.push_back(calcul_conf(patch,conf));
     }
     return(Listconf);

@@ -194,7 +194,7 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
         cout <<to_string(iter) <<endl;
         }
         iter++;
-
+        click();
         ListepixelBord=point_bord_w_omega(W,H,conf);//(1a) we compute the new list pixel who compose the surface
 
         convertGrey(W,H,r,g,b,Image_in_grey);//in order to compute our gradient and so the data term
@@ -205,7 +205,7 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
         F=prio(ListepixelBord,C,D);//(1b)
 
         pixel_bord p_max=F.pop();//(2a)
-        fillCircle(p_max.P.x,p_max.P.y,2,PURPLE);
+        //fillCircle(p_max.P.x,p_max.P.y,2,PURPLE);
         cord_double grad=grad_rev(p_max.P,conf,Image_in_grey);
         if (grad.norm2()<=3){
             copy_image_data_for_gradient_nul(p_max.P,conf,r,g,b);
