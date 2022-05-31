@@ -24,10 +24,7 @@ int main(){
     putColorImage(0,0,r,g,b,W,H);
 
     std::vector <cord> ListePoint;
-    drawclicks(ListePoint);
 
-
-    click();
 //    //Test sans remplissage
 //    Image<double> conf(W,H);
 //    conf.fill(1);

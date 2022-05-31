@@ -184,17 +184,12 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
     std::vector <double> C; // this will be our list of confidence for pixel_bord
     FilePriorite F; // our file of Priority
 
+    drawclicks(ListePoint);
     Espace_blanc_compar_blanc(W,H,ListePoint,r,g,b,conf);// initialize the conf (1)
 
-    int iter=0;
     while(!omega_is_empty(W,H,conf)){//(1a)
         putColorImage(0,0,r,g,b,W,H);
-        if (iter%2==0){
 
-        cout <<to_string(iter) <<endl;
-        }
-        iter++;
-        click();
         ListepixelBord=point_bord_w_omega(W,H,conf);//(1a) we compute the new list pixel who compose the surface
 
         convertGrey(W,H,r,g,b,Image_in_grey);//in order to compute our gradient and so the data term
