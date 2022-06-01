@@ -19,7 +19,7 @@ int main(){
     byte* g;
     byte* b;
 
-    loadColorImage(srcPath("Capture1.png"),r,g,b,W,H);
+    loadColorImage(srcPath("IMG_2317.JPG"),r,g,b,W,H);
     openWindow(W,H);
     putColorImage(0,0,r,g,b,W,H);
 

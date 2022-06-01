@@ -17,7 +17,7 @@ const int carre = 0;
 const int cercle = 1;
 
 const int type_p=0;
-const int siz=10;
+const int siz=5;
 
 const double tol=0.5;
 const double ecart_div=20;

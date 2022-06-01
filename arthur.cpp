@@ -68,19 +68,19 @@ bool in(std::vector <cord> ListePoint,cord P){
 
     return(false);
 }
-bool autour_blanc(cord P,int W, int H,byte* r, byte* g, byte* b){
+bool autour_in(cord P,int W, int H,Image<double> conf){
     int s=0;
     for (int k=-1;k<2;k++)
         for (int j=-1;j<2;j++){
             if(j!=0 or k!=0)
-                if (r[P.x+k+(P.y+j)*W]==255 and g[P.x+k+(P.y+j)*W]==255 and b[P.x+k+(P.y+j)*W]==255)
+                if (conf(P.x,P.y)==0)
                     s+=1;
         }
     if (s==8)
         return(true);
     return false;
 }
-void Espace_blanc_compar_blanc(int W, int H,vector <cord> ListePoint ,byte* r, byte* g, byte* b,Image<double> conf){
+void Espace_blanc(int W, int H,vector <cord> ListePoint ,byte* r, byte* g, byte* b,Image<double> conf){
     for (int x=0;x<W;x++)
         for (int y=0;y<H;y++){
             cord P={x,y};
@@ -97,7 +97,7 @@ void Espace_blanc_compar_blanc(int W, int H,vector <cord> ListePoint ,byte* r, b
     for (int x=0;x<W;x++)
         for (int y=0;y<H;y++){
             cord P={x,y};
-            if (autour_blanc(P,W,H,r,g,b)){
+            if (autour_in(P,W,H,conf)){
 
                 r[x+y*W]=255,
                         g[x+y*W]=255,
@@ -189,7 +189,7 @@ void main_loop(int W, int H,std::vector <cord> ListePoint,byte* r,byte* g,byte* 
     FilePriorite F; // our file of Priority
 
     drawclicks(ListePoint);
-    Espace_blanc_compar_blanc(W,H,ListePoint,r,g,b,conf);// initialize the conf (1)
+    Espace_blanc(W,H,ListePoint,r,g,b,conf);// initialize the conf (1)
 
 
     while(!omega_is_empty(W,H,conf)){//(1a)
